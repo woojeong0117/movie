@@ -18,6 +18,7 @@
 			<p class="desc">{{ movieDetail.overview }}</p>
 		</div>
 	</div>
+	<ReviewList></ReviewList>
 </template>
 
 <script setup>
@@ -26,6 +27,7 @@ import ErrorPage from '../components/ErrorPage.vue';
 import { movieApi } from '../api';
 import { useRoute } from 'vue-router';
 import { ref } from 'vue';
+import ReviewList from '../components/ReviewList.vue';
 
 const route = useRoute();
 const id = route.params.id;

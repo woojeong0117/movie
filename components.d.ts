@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     LodingPage: typeof import('./src/components/LodingPage.vue')['default']
     MovieList: typeof import('./src/components/MovieList.vue')['default']
     NotFound: typeof import('./src/components/NotFound.vue')['default']
+    ReviewList: typeof import('./src/components/ReviewList.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
