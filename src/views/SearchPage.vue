@@ -6,7 +6,7 @@
 		</form>
 		<MovieList :movieList="search"></MovieList>
 		<Pagination v-if="search.length" :current="current" :setMovie="searchMovie" @update:current="onPageChanged" />
-		<ErrorPage v-if="search.length === 0 && keyword.length > 0" :message="'검색 결과가 없습니다.'" />
+		<ErrorPage v-if="search.length === 0 && keyword.length > 0 && isSearched" :message="'검색 결과가 없습니다.'" />
 	</div>
 </template>
 <script setup>
@@ -26,6 +26,7 @@ const keyword = ref('');
 const current = ref(1);
 const loading = ref(false);
 const error = ref(null);
+const isSearched = ref(false);
 
 const onSearch = async () => {
 	try {
@@ -44,6 +45,7 @@ const onSearch = async () => {
 		error.value = err;
 	} finally {
 		loading.value = false;
+		isSearched.value = true;
 	}
 };
 

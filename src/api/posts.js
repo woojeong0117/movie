@@ -1,17 +1,17 @@
-import axios from 'axios';
+import { posts } from '.';
 
-export function getPosts() {
-	return axios.get('http://localhost:5000/posts');
+export function getPosts(params) {
+	return posts.get('/', { params });
 }
 
 export function getPostById(id) {
-	return axios.get(`http://localhost:5000/posts/${id}`);
+	return posts.get(`/${id}`);
 }
 
-export function createPost(id, data) {
-	return axios.get(`http://localhost:5000/posts/${id}`, data);
+export function createPost(data) {
+	return posts.post('', data);
 }
 
 export function deletePosts(id) {
-	return axios.delete(`http://localhost:5000/posts/${id}`);
+	return posts.delete(`/${id}`);
 }
