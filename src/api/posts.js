@@ -15,3 +15,7 @@ export function createPost(data) {
 export function deletePosts(id) {
 	return posts.delete(`/${id}`);
 }
+
+export function updatePost(id, data) {
+	return posts.patch(`/${id}`, data);
+}

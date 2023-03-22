@@ -3,7 +3,7 @@
 		<MovieList :movieList="popular"></MovieList>
 		<LoadingPage v-if="loading"></LoadingPage>
 		<ErrorPage v-else-if="error" :message="error.message" />
-		<Pagination :current="current" :setMovie="setMovie" @update:current="current" />
+		<Pagination :current="current" :setMovie="setMovie" :totalCount="totalCount" />
 	</div>
 </template>
 
@@ -19,6 +19,7 @@ const popular = ref([]);
 const current = ref(1);
 const loading = ref(false);
 const error = ref(null);
+const totalCount = ref(1);
 
 const setMovie = async page => {
 	try {
@@ -26,6 +27,7 @@ const setMovie = async page => {
 		const { data } = await movieApi.popular(page);
 		popular.value = data.results;
 		current.value = page;
+		console.log(totalCount);
 	} catch (err) {
 		console.error(err);
 		error.value = err;

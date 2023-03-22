@@ -44,6 +44,10 @@ const props = defineProps({
 		type: Function,
 		required: true,
 	},
+	totalCount: {
+		type: Number,
+		required: true,
+	},
 });
 
 const emits = defineEmits(['update:current']);
@@ -67,22 +71,22 @@ function incrementPage() {
 }
 
 function firstPage() {
-	props.setMovie(current.value);
 	current.value = 1;
+	props.setMovie(current.value);
 	emits('update:current', current.value);
 }
 
 function lastPage() {
-	props.setMovie(current.value);
 	current.value = totalCount;
+	props.setMovie(current.value);
 	emits('update:current', current.value);
 }
 
 const isPrevPage = computed(() => ({ disabled: current.value <= 1 }));
-const isNextPage = computed(() => ({ disabled: current.value === totalCount }));
+const isNextPage = computed(() => ({ disabled: current.value === totalCount.value }));
 
 // 페이지네이션 세팅
-const totalCount = 48;
+const totalCount = ref(0);
 
 const visiblePages = computed(() => {
 	const maxVisiblePages = 3;
