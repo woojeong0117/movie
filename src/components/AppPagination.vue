@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, toRef } from 'vue';
 
 const props = defineProps({
 	current: {
@@ -46,12 +46,15 @@ const props = defineProps({
 	},
 	totalCount: {
 		type: Number,
+		default: 1,
 		required: true,
 	},
 });
 
 const emits = defineEmits(['update:current']);
 const current = ref(props.current);
+const totalCount = toRef(props, 'totalCount');
+
 function decrementPage() {
 	props.setMovie(current.value - 1);
 	current.value -= 1;
@@ -77,7 +80,7 @@ function firstPage() {
 }
 
 function lastPage() {
-	current.value = totalCount;
+	current.value = Math.min(totalCount.value, 500);
 	props.setMovie(current.value);
 	emits('update:current', current.value);
 }
@@ -86,12 +89,11 @@ const isPrevPage = computed(() => ({ disabled: current.value <= 1 }));
 const isNextPage = computed(() => ({ disabled: current.value === totalCount.value }));
 
 // 페이지네이션 세팅
-const totalCount = ref(0);
 
 const visiblePages = computed(() => {
-	const maxVisiblePages = 3;
+	const maxVisiblePages = 5;
 	const currentPageValue = current.value;
-	const lastPage = totalCount;
+	const lastPage = Math.min(totalCount.value, 500);
 	const startPage = Math.max(1, Math.ceil(currentPageValue / maxVisiblePages) * maxVisiblePages - maxVisiblePages + 1);
 	const endPage = Math.min(lastPage, startPage + maxVisiblePages - 1);
 	const visiblePagesArray = [];

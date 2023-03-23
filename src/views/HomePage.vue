@@ -19,15 +19,14 @@ const popular = ref([]);
 const current = ref(1);
 const loading = ref(false);
 const error = ref(null);
-const totalCount = ref(1);
-
+const totalCount = ref();
 const setMovie = async page => {
 	try {
 		loading.value = true;
 		const { data } = await movieApi.popular(page);
 		popular.value = data.results;
 		current.value = page;
-		console.log(totalCount);
+		totalCount.value = data.total_pages;
 	} catch (err) {
 		console.error(err);
 		error.value = err;

@@ -51,5 +51,12 @@ const goDetail = id => {
 		object-fit: scale-down;
 		height: 429px;
 	}
+
+	.card-body {
+		height: 80px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 }
 </style>

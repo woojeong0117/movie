@@ -5,7 +5,7 @@
 			<input class="form-control" v-model="keyword" placeholder="영화 제목을 입력하세요." />
 		</form>
 		<MovieList :movieList="search"></MovieList>
-		<Pagination v-if="search.length" :current="current" :setMovie="searchMovie" @update:current="onPageChanged" />
+		<Pagination v-if="search.length" :current="current" :setMovie="searchMovie" @update:current="onPageChanged" :totalCount="totalCount" />
 		<ErrorPage v-if="search.length === 0 && keyword.length > 0 && isSearched" :message="'검색 결과가 없습니다.'" />
 	</div>
 </template>
@@ -27,6 +27,7 @@ const current = ref(1);
 const loading = ref(false);
 const error = ref(null);
 const isSearched = ref(false);
+const totalCount = ref();
 
 const onSearch = async () => {
 	try {
@@ -40,6 +41,7 @@ const onSearch = async () => {
 
 		const { data } = await movieApi.search(keyword.value);
 		search.value = data.results;
+		totalCount.value = data.total_pages;
 	} catch (err) {
 		console.error(err);
 		error.value = err;
@@ -54,6 +56,7 @@ const searchMovie = async () => {
 		loading.value = true;
 		const res = await movieApi.search(keyword.value, current.value);
 		search.value = res.data.results;
+
 		if (search.value.length === 0) {
 			error.value = '검색 결과가 없습니다.';
 		} else {
